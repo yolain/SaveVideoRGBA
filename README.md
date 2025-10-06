@@ -1,7 +1,7 @@
 
 Enhanced the comfyui savevideo node to support previewing and saving videos containing alpha channels.
 
-<img width="100%" height="auto" alt="Image" src="https://github-production-user-asset-6210df.s3.amazonaws.com/73304135/497659951-46496759-daf4-4749-9644-b7e795560a69.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20251006%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251006T061801Z&X-Amz-Expires=300&X-Amz-Signature=69ccad19ceb69edb1d89359b0cdf9c5717c546a4abd3c1f1b90e40f61259686c&X-Amz-SignedHeaders=host" />
+![screenshot](./screenshot.png)
 
 ### 🔨Wan-Alpha Video Usage
 
