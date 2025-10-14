@@ -3,6 +3,9 @@ from typing_extensions import override
 from typing import Optional
 from fractions import Fraction
 from enum import Enum
+from PIL import Image
+import torch
+import numpy as np
 import io
 import json
 import math
@@ -41,6 +44,22 @@ class SaveVideoRGBA(io.ComfyNode):
 
         B, H, W, C = images.shape
         has_alpha = C == 4
+
+        divisible_by = 2
+        if W % divisible_by != 0 or H % divisible_by != 0:
+            new_width = W - (W % divisible_by)
+            new_height = H - (H % divisible_by)
+
+            print(f'Resize video from {W}x{H} to {new_width}x{new_height}')
+
+            resized_images = []
+            for i in range(B):
+                img = Image.fromarray((images[i].cpu().numpy() * 255).astype(np.uint8))
+                resized_img = img.resize((new_width, new_height), Image.LANCZOS)
+                resized_tensor = torch.from_numpy(np.array(resized_img).astype(np.float32) / 255.0)
+                resized_images.append(resized_tensor.unsqueeze(0))
+
+            images = torch.cat(resized_images, dim=0)
 
         video = RGBAVideoFromComponents(
             VideoComponents(
