@@ -60,14 +60,17 @@ class SaveVideoRGBA(io.ComfyNode):
                 resized_images.append(resized_tensor.unsqueeze(0))
 
             images = torch.cat(resized_images, dim=0)
-
-        video = RGBAVideoFromComponents(
-            VideoComponents(
-                images=images,
-                audio=audio,
-                frame_rate=Fraction(fps),
+        try:
+            from comfy_api.latest import InputImpl, Types
+            video = InputImpl.VideoFromComponents(Types.VideoComponents(images=images, audio=audio, frame_rate=Fraction(fps)))
+        except Exception as e:
+            video = RGBAVideoFromComponents(
+                VideoComponents(
+                    images=images,
+                    audio=audio,
+                    frame_rate=Fraction(fps),
+                )
             )
-        )
 
         width, height = video.get_dimensions()
         results = list()
